@@ -10,22 +10,19 @@ import (
 
 func main() {
 	ctx := context.Background()
+
 	conn, err := simpleconnection.CheckConnection(ctx)
 	if err != nil {
 		panic(err)
 	}
+	if err := simplesql.CreateTable(conn, ctx); err != nil {
+		panic(err)
+	}
 
-	// if err := simplesql.CreateTable(conn, ctx); err != nil {
-	// 	panic(err)
-	// }
+	if err := simplesql.InsertRow(ctx, conn, "Об", "пойти в школу пообедать", false, time.Now()); err != nil {
+		panic(err)
+	}
 
-	// if err := simplesql.InsertRow(ctx, conn, "Об", "пойти в школу пообедать", false, time.Now()); err != nil {
-	// 	panic(err)
-	// }
-
-	// if err := simplesql.Update(ctx, *conn); err != nil {
-	// 	panic(err)
-	// }
 	tasks, err := simplesql.SelectRows(ctx, conn)
 	if err != nil {
 		panic(err)
